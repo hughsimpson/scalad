@@ -1,5 +1,3 @@
-import sbtrelease._
-
 /** Project */
 name := "Scalad"
 
@@ -40,7 +38,7 @@ libraryDependencies <<= scalaVersion { scala_version =>
     Seq(
         "org.mongodb"          % "mongo-java-driver"   % "2.10.0",
         "com.typesafe"         % "config"              % "1.0.0",
-        "io.spray"             %% "spray-json"          % "1.2.3",
+        "io.spray"             %% "spray-json"          % "1.3.1",
         "org.specs2"           %% "specs2"              % "1.13" % "test",
         "org.scalacheck"       %% "scalacheck"          % "1.10.0" % "test"
     )

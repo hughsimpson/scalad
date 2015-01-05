@@ -246,7 +246,7 @@ class SprayJsonConvertors extends UuidChecker with J2SELogging
     import scala.collection.convert.WrapAsScala._
 
     obj match {
-      case a: BasicDBList => JsArray(a.toList.map {
+      case a: BasicDBList => JsArray(a.to[Vector].map {
         f => obj2js(f)
       })
       case dbObj: BasicDBObject =>
