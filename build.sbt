@@ -2,11 +2,11 @@
 name := "Scalad"
 
 /** DON'T FORGET TO CHANGE version.sbt */
-version := "1.2.0"
+version := "1.3.0"
 
-organization := "org.cakesolutions"
+organization := "com.sphonic"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.6"
 
 /** Shell */
 shellPrompt := { state => System.getProperty("user.name") + "> " }
@@ -24,22 +24,27 @@ resolvers += "Sonatype OSS Releases" at "http://oss.sonatype.org/content/reposit
 
 publishMavenStyle := true
 
-publishTo <<= version { (v: String) =>
-  if (v.trim.endsWith("SNAPSHOT"))
-    Some("Cakesolutions Artifactory Snapshots" at "http://build.cakesolutions.net/artifactory/libs-snapshot-local")
-  else
-    Some("Cakesolutions Artifactory Releases" at "http://build.cakesolutions.net/artifactory/libs-release-local")
+publishTo <<= version {
+  v =>
+    val nexus = "http://artifactory.sphoniclabs.net:8081/"
+    if (v.trim.endsWith("SNAPSHOT"))
+      Some("snapshots" at nexus + "artifactory/sphonic-snapshot-local/")
+    else
+      Some("releases" at nexus + "artifactory/sphonic-releases-local/")
 }
 
-credentials += Credentials(Path.userHome / ".artifactory" / ".credentials")
+//publishMavenStyle := true
+//
+//publishArtifact in Test := false
 
+credentials += Credentials(Path.userHome / ".ivy2" / ".sphonic_credentials")
 
 libraryDependencies <<= scalaVersion { scala_version => 
     Seq(
         "org.mongodb"          % "mongo-java-driver"   % "2.10.0",
         "com.typesafe"         % "config"              % "1.0.0",
         "io.spray"             %% "spray-json"          % "1.3.1",
-        "org.specs2"           %% "specs2"              % "1.13" % "test",
+        "org.specs2"           %% "specs2"              % "2.4.16" % "test",
         "org.scalacheck"       %% "scalacheck"          % "1.10.0" % "test"
     )
 }

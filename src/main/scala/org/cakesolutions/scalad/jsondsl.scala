@@ -19,9 +19,11 @@ trait JsonDsl {
     cf.listFormat.write(elements.toList)
   }
 
-  implicit class JsObjectBuilder[V: JsonWriter](key: String) extends DefaultJsonProtocol {
-    val writer = implicitly[JsonWriter[V]]
-    def :>(that: V): JsObject = JsObject(Map(key -> writer.write(that)))
+  implicit class JsObjectBuilder(key: String) extends DefaultJsonProtocol {
+    def :>[V: JsonWriter](that: V): JsObject = {
+      val writer = implicitly[JsonWriter[V]]
+      JsObject(Map(key -> writer.write(that)))
+    }
   }
 
   implicit class JsObjectMonoidalMappend(obj: JsObject) extends DefaultJsonProtocol {

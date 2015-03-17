@@ -3,6 +3,7 @@ package org.cakesolutions.scalad.mongo
 import com.mongodb._
 import java.util.{Date, UUID}
 import org.specs2._
+import org.specs2.execute.{Result, AsResult}
 import org.specs2.mutable.Specification
 import scala.collection.convert.WrapAsJava._
 import scala.collection.convert.WrapAsScala._
@@ -78,79 +79,94 @@ class SprayJsonSupportTest extends Specification
     "be able to serialize an Int" in {
       val original = Map("value" -> 20)
       mustSerialize(original, new BasicDBObject(original))
+      ok
     }
 
     "be able to deserialize an Int" in {
       val original = Map("v" -> 20)
       mustDeserialize(new BasicDBObject(original), original)
+      ok
     }
 
     "be able to serialize a Double" in {
       val original = Map("v" -> 1.23)
       mustSerialize(original, new BasicDBObject(original))
+      ok
     }
 
     "be able to serialize a complex Double" in {
       val original = Map("v" -> 3.141592653589793238462643383279502884197169399)
       mustSerialize(original, new BasicDBObject(original))
+      ok
     }
 
 
     "be able to deserialize a raw Double" in {
       val original = Map("value" -> 10.1)
       mustDeserialize(new BasicDBObject(original), original)
+      ok
     }
 
     "be able to serialize a Long" in {
       val original = Map("value" -> 200.toLong)
       mustSerialize(original, new BasicDBObject(original))
+      ok
     }
 
     "be able to deserialize a Long" in {
       val original = Map("v" -> 200.toLong)
       mustDeserialize(new BasicDBObject(original), original)
+      ok
     }
 
     "be able to serialize a Boolean" in {
       val original = Map("v" -> true)
       mustSerialize(original, new BasicDBObject(original))
+      ok
     }
 
     "be able to deserialize an Boolean" in {
       val original = Map("v" -> true) 
       mustDeserialize(new BasicDBObject(original), original)
+      ok
     }
 
     "be able to serialize a String" in {
       val original = Map("value" -> "hello")
       mustSerialize(original, new BasicDBObject(original))
+      ok
     }
 
     "be able to deserialize a String" in {
       val original = Map("v" -> "hello")
       mustDeserialize(new BasicDBObject(original), original)
+      ok
     }
 
     "be able to serialize a UUID" in {
       val string = "550e8400-e29b-41d4-a716-446655440000"
       val json = Map("$uuid" -> string)
       mustSerialize(json, UUID.fromString(string))
+      ok
     }
 
     "be able to deserialize a UUID" in {
        val string = "550e8400-e29b-41d4-a716-446655440000"
        val json = Map("$uuid" -> string)
        mustDeserialize(UUID.fromString(string), json)
+      ok
     }
 
     "be able to serialise a Date" in {
       val json = Map("$date" -> "2013-02-04T17:51:35.479+0000")
       mustSerialize(json, new Date(1360000295479L))
+      ok
     }
 
     "be able to deserialise a Date" in {
         val json = Map("$date" -> "2013-02-04T17:51:35.479+0000")
         mustDeserialize(new Date(1360000295479L), json)
+        ok
     }
 
 //    "be able to serialise a StringBigDecimal" in {
@@ -185,21 +201,25 @@ class SprayJsonSupportTest extends Specification
       val string = "100000000000000.00000000000001"
       val original = StringBigDecimal(string)
       mustSerialize(original, string)
+      ok
     }
 
     "be able to serialise a StringBigInt" in {
       val string = "10000000000000000000000000001"
       val original = StringBigInt(string)
       mustSerialize(original, string)
+      ok
     }
 
     "be able to serialize a JsNull" in {
       mustSerialize(JsValueEntity(JsNull), new BasicDBObject("value", null))
+      ok
     }
 
     "be able to deserialize a JsNull" in {
       val original = JsValueEntity(JsNull)
       mustDeserialize(new BasicDBObject("value", null), original)
+      ok
     }
 
     "be able to serialize an homogeneous List" in {
@@ -208,6 +228,7 @@ class SprayJsonSupportTest extends Specification
       dbList.addAll(a1)
       val expected = new BasicDBObject(Map("value" -> dbList))
       mustSerialize(Map("value" -> a1), expected)
+      ok
     }
 
     "be able to deserialize an homogeneous List" in {
@@ -216,6 +237,7 @@ class SprayJsonSupportTest extends Specification
       dbList.addAll(a1)
       val original = dbList
       mustDeserialize(original, a1)
+      ok
     }
 
     "be able to serialize an heterogeneous List" in {
@@ -227,11 +249,13 @@ class SprayJsonSupportTest extends Specification
     "be able to serialize a Map" in {
       val original = Map("key" -> "value")
       mustSerialize(original, new BasicDBObject(original))
+      ok
     }
 
     "be able to deserialize a Map" in {
       val original = Map("key" -> "value")
       mustDeserialize(new BasicDBObject(original), original)
+      ok
     }
 
     "be able to ONLY serialize a nested Map" in {
@@ -243,11 +267,13 @@ class SprayJsonSupportTest extends Specification
       val expected = new BasicDBObject()
       expected.put("a", new BasicDBObject(nested))
       mustSerialize(original, expected)
+      ok
     }
 
     "be able to serialize/deserialize a nested Map" in {
       val original = Map("a" -> Map("b" -> Map("c" -> "!")))
       mustSerializeAndDeserialize(original)
+      ok
     }
 
     "be able to serialize a Person" in {
@@ -255,10 +281,12 @@ class SprayJsonSupportTest extends Specification
       val expected = new BasicDBObject(Map("name" -> "John",
                                            "surname" -> "Doe"))
       mustSerialize(original, expected)
+      ok
     }
 
     "be able to deserialize a Person" in {
       mustSerializeAndDeserialize(Person("John", "Doe"))
+      ok
     }
 
     "be able to serialize/deserialize a Student" in {
@@ -271,6 +299,7 @@ class SprayJsonSupportTest extends Specification
                              ,graduated = false
                              )
       mustSerializeAndDeserialize(original)
+      ok
     }
   }
 
